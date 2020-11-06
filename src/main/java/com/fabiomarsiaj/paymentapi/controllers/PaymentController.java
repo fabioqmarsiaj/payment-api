@@ -8,6 +8,7 @@ import com.stripe.model.PaymentMethod;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class PaymentController {
     private static final Gson gson = new Gson();
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(
+    public ResponseEntity<String> createMethod(
             @RequestParam String apiKey,
             @RequestBody CardRequest cardRequest) throws StripeException {
 
@@ -38,6 +39,21 @@ public class PaymentController {
 
         PaymentMethod paymentMethod =
                 PaymentMethod.create(params);
+
+        return ResponseEntity.ok(gson.toJson(paymentMethod));
+    }
+
+    @GetMapping("/retrieve")
+    public ResponseEntity<String> retrieveMethod(
+            @RequestParam String secretKey,
+            @RequestParam String id) throws StripeException {
+
+        Stripe.apiKey = secretKey;
+
+        PaymentMethod paymentMethod =
+                PaymentMethod.retrieve(
+                        id
+                );
 
         return ResponseEntity.ok(gson.toJson(paymentMethod));
     }
