@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/paymentmethod")
 public class PaymentMethodController {
 
     @Value("${STRIPE_PUBLIC_KEY}")
